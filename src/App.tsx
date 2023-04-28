@@ -6,8 +6,12 @@ import {pokeData} from "./common/models/mockData";
 import {pokemon} from "./common/models/pokemon";
 import PokeForm from "./views/PokeForm/PokeForm";
 import PokeDetails from "./views/PokeDetails/PokeDetails";
+
 import PersonView from "./views/PersonView/PersonView";
 import PersonAdd from "./views/PersonAdd/PersonAdd";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
+import Homepage from "./views/pages/Hompage";
+import Blog from "./views/pages/Blog";
 
 
 export enum AppViews {
@@ -21,8 +25,8 @@ export enum AppViews {
 function App() {
 
    //const [selectedView, setSelectedView] = useState<AppViews>(AppViews.PokeOverview)
-   //const [selectedView, setSelectedView] = useState<AppViews>(AppViews.LoadPersons);
-   const [selectedView, setSelectedView] = useState<AppViews>(AppViews.AddPerson);
+   const [selectedView, setSelectedView] = useState<AppViews>(AppViews.LoadPersons);
+   //const [selectedView, setSelectedView] = useState<AppViews>(AppViews.AddPerson);
 
     let [pokeTeam, setPokemons] = useState<pokemon[]>(pokeData)
 
@@ -45,18 +49,6 @@ function App() {
     }
 
     let [detailedPoke, setdetailedPoke] = useState(pokeTeam[0]);
-
-    /* const showPokeDetails = (id:number) => {
-        console.log(id);
-        let poke = pokeTeam.find ( (poke) => {
-            return (poke.pokeIndex == id);
-        })
-        if (poke != undefined) {
-            // @ts-ignore
-            setdetailedPoke(poke);
-        }
-        setSelectedView(AppViews.PokeDetails);
-    } */
 
     const showPokeDetails = (poke:pokemon) => {
         console.log(poke);
@@ -93,26 +85,23 @@ function App() {
                 return (
                     <PokeDetails detailedPoke={detailedPoke} toPokeTeam={switchToPokeTeam}/>
                 )
-            case AppViews.LoadPersons:
-                return (
-                    <PersonView onclick={switchAddPerson}/>
-                )
-            case AppViews.AddPerson:
-                return (
-                    <PersonAdd/>
-                )
         }
     };
 
+
     return (
-    <div className="App">
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<Homepage />}>
+                  <Route path="blogs" element={<Blog/>}/>
+                  <Route path="personView" element={<PersonView onclick={switchAddPerson}/>}/>
+                    <Route path="personAdd" element={<PersonAdd />}/>
 
+                </Route>
 
-        <div className="app-content">
-            {renderSelectedView()}
-        </div>
-        </div>
-  );
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;

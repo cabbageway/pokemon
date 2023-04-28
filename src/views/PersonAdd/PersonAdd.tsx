@@ -32,12 +32,15 @@ const PersonAdd = () => {
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <label>
-                    Person Name:
-                    <input type="text" name="tfName" onChange={handleChange} />
+            <h2 className="m-5">Put Request um eine Person zu adden</h2>
+            <form className="m-5" onSubmit={handleSubmit}>
+                <div className="form-group">
+                <label htmlFor="tfName">Person Name
                 </label>
-                <button type="submit">Add</button>
+                <input className="form-control" type="text" name="tfName"
+                       onChange={handleChange} id="tfName"/>
+                </div>
+                    <button className="btn btn-secondary mt-1" type="submit">Add</button>
             </form>
         </div>
     );
